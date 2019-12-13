@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    {% for js in all_js %}
+    <script src="{{ url_for('static', filename=js) }}"></script>
+    {% endfor %}
+    <script src="http://localhost:8097"></script>
+  </body>
+</html>
