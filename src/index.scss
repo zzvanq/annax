@@ -1,0 +1,82 @@
+$gray-dark: #707070;
+$black-shadow: rgba(0, 0, 0, 0.16);
+
+body {
+    margin: 0;
+    font-family: "Segoe UI";
+    color: $gray-dark;
+
+    input {
+        font-family: "Segoe UI";
+    }
+
+    .app {
+        #chat {
+            margin: 85px auto 0;
+            width: 484px;
+            position: relative;
+
+            #header {
+                margin-bottom: 9px;
+
+                .room-title {
+                    margin: 0;
+                    text-align: center;
+                    font-size: 22px;
+                }
+            }
+
+            #messages {
+                height: 666px;
+                border: 2px solid $gray-dark;
+                padding: 9px 24px;
+
+                p {
+                    margin: 0;
+                }
+
+                .message-box {
+                    .sender {
+                        margin-bottom: 20px;
+                    }
+
+                    .message {
+                        padding-left: 8px;
+                        margin-bottom: 14px;
+                    }
+                }
+            }
+
+            #cli-wrapper {
+                position: absolute;
+                top: 255px;
+                left: 50%;
+                margin-left: -165px;
+                box-shadow: 4px 5px 6px $black-shadow;
+
+                .cli {
+                    width: 328px;
+                    border: 1px solid $gray-dark;
+                    padding: 5px 12px;
+                    font-size: 20px;
+                    color: #707070;
+                    box-shadow: none;
+                    outline: none;
+                }
+
+                .login-label {
+                    position: absolute;
+                    top: 6px;
+                    left: 13px;
+                    font-size: 20px;
+                    color: #707070;
+                }
+
+                #login {
+                    padding-left: 110px;
+                    width: 218px;
+                }
+            }
+        }
+    }
+}

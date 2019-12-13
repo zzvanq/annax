@@ -33,7 +33,7 @@ class Cli extends React.Component {
     render() {
         return (
             <div className="message-box">
-                <input type="text" value={this.state.text} onChange={this.handleChange} onKeyDown={this.handleKeyDown} className="cli" />
+                <input type="text" value={this.state.text} onChange={this.handleChange} onKeyDown={this.handleKeyDown} className="cli" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
             </div>
         );
     } 

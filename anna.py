@@ -12,8 +12,9 @@ socketio = SocketIO(app)
 
 @app.route('/')
 def handle_index():
-    all_js = os.listdir(app.static_folder)
-    return render_template("index.html", all_js=all_js)
+    all_js = os.listdir(os.path.join(app.static_folder, "js"))
+    all_css = os.listdir(os.path.join(app.static_folder, "css"))
+    return render_template("index.html", all_js=all_js, all_css=all_css)
 
 @socketio.on('join')
 def handle_join(data):

@@ -10,6 +10,7 @@ class Chat extends React.Component {
         this.state = {
           endpoint: "",
           username: "",
+          room: "Серый Дом",
           authed: false,
           messages: [],
         };
@@ -48,16 +49,22 @@ class Chat extends React.Component {
     render() {
         return (
             <div id="chat">
-                <div id="cli-wrapper">
-                    {this.state.authed ? 
-                    <Cli socket={this.socket} username={this.state.username} /> :
-                    <input type="text" onChange={this.handleChange} onKeyDown={this.handleKeyDown} id="login" value={this.state.username}/>
-                    }
+                <div id="header">
+                    <p className="room-title">{this.state.room}</p>
                 </div>
-                <div id="messages-box">
+                <div id="messages">
                     {this.state.messages.map(item => {
                         return <Message username={item[0]} message={item[1]} />
                     })}
+                </div>
+                <div id="cli-wrapper">
+                    {this.state.authed ? 
+                    <Cli socket={this.socket} username={this.state.username} /> :
+                    <div>
+                        <div className="login-label">/никнейм </div>
+                        <input type="text" className="cli" onChange={this.handleChange} onKeyDown={this.handleKeyDown} id="login" value={this.state.username} autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                    </div>
+                    }
                 </div>
             </div>
         );

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "node-sass": "^4.13.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-scripts": "^3.3.0",
@@ -10,7 +11,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && del static\\*.js && move build\\static\\js\\*.js static\\",
+    "build": "react-scripts build && npm run replace-js && npm run replace-css",
+    "replace-js": "del static\\js\\*.js && move build\\static\\js\\*.js static\\js\\",
+    "replace-css": "del static\\css\\*.css && move build\\static\\css\\*.css static\\css\\",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

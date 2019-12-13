@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
+    {% for css in all_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/' + css) }}">
+    {% endfor %}
   </head>
   <body>
     <div id="root"></div>
 
     {% for js in all_js %}
-    <script src="{{ url_for('static', filename=js) }}"></script>
+    <script src="{{ url_for('static', filename='js/' + js) }}"></script>
     {% endfor %}
     <script src="http://localhost:8097"></script>
   </body>
