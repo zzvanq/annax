@@ -10,7 +10,7 @@ class Chat extends React.Component {
         this.state = {
           endpoint: "",
           username: "",
-          room: "Серый Дом",
+          room: "Чат",
           authed: false,
           messages: [],
         };
@@ -26,7 +26,7 @@ class Chat extends React.Component {
         });
 
         this.socket.on("message", data => {
-            this.setState({messages: [[data['username'], data['message']], ...this.state.messages]});
+            this.setState({messages: [...this.state.messages, [data['username'], data['message']]]});
         });
 
         this.socket.on("auth", (authed) => {
@@ -53,8 +53,14 @@ class Chat extends React.Component {
                     <p className="room-title">{this.state.room}</p>
                 </div>
                 <div id="messages">
-                    {this.state.messages.map(item => {
-                        return <Message username={item[0]} message={item[1]} />
+                    {this.state.messages.map((item, index, arr) => {
+                        var prev_item = arr[index - 1];
+
+                        if (prev_item && (item[0] === prev_item[0])) {
+                            return <Message message={item[1]} />
+                        } else {
+                            return <Message username={item[0]} message={item[1]} />
+                        }
                     })}
                 </div>
                 <div id="cli-wrapper">
@@ -62,7 +68,7 @@ class Chat extends React.Component {
                     <Cli socket={this.socket} username={this.state.username} /> :
                     <div>
                         <div className="login-label">/никнейм </div>
-                        <input type="text" className="cli" onChange={this.handleChange} onKeyDown={this.handleKeyDown} id="login" value={this.state.username} autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                        <input type="text" className="cli" autoFocus onChange={this.handleChange} onKeyDown={this.handleKeyDown} id="login" value={this.state.username} autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
                     </div>
                     }
                 </div>

@@ -1,12 +1,23 @@
 $gray-dark: #707070;
+$gray-light: #C5C5C5;
 $black-shadow: rgba(0, 0, 0, 0.16);
+$width-cli: 330px;
+
+.hidden {
+    opacity: 0!important;
+    z-index: -1!important;
+}
+
+.disable {
+    display: none;
+}
 
 body {
     margin: 0;
     font-family: "Segoe UI";
     color: $gray-dark;
 
-    input {
+    input, textarea {
         font-family: "Segoe UI";
     }
 
@@ -43,25 +54,60 @@ body {
                     .message {
                         padding-left: 8px;
                         margin-bottom: 14px;
+                        word-break: break-word;
                     }
                 }
             }
 
             #cli-wrapper {
                 position: absolute;
-                top: 255px;
+                top: 240px;
                 left: 50%;
                 margin-left: -165px;
-                box-shadow: 4px 5px 6px $black-shadow;
 
+                .cli-outarea {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100vw;
+                    height: 100vh;
+                    z-index: 1;
+                }
+                
                 .cli {
-                    width: 328px;
+                    display: block;
+                    width: $width-cli - 26px; // Minus border and padding width
                     border: 1px solid $gray-dark;
+                    background: transparent;
                     padding: 5px 12px;
                     font-size: 20px;
                     color: #707070;
+                    resize: none;
                     box-shadow: none;
                     outline: none;
+                }
+                
+                .cli-input-wrapper {
+                    z-index: 2;
+                    position: absolute;
+                    box-shadow: 4px 5px 6px $black-shadow;
+
+                    .predicted-end-wrapper {
+                        position: absolute;
+                        height: 100%;
+                        width: 100%;
+                        z-index: -1;
+    
+                        p {
+                            margin: 0;
+                            font-size: 20px;     
+                            padding: 6px 13px;
+                            
+                            .predicted-text {
+                                color: $gray-light;
+                            }
+                        }
+                    }
                 }
 
                 .login-label {
@@ -74,7 +120,8 @@ body {
 
                 #login {
                     padding-left: 110px;
-                    width: 218px;
+                    width: 206px;
+                    box-shadow: 4px 5px 6px $black-shadow;
                 }
             }
         }

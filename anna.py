@@ -18,10 +18,12 @@ def handle_index():
 
 @socketio.on('join')
 def handle_join(data):
-    username = data['username']
-    room = data['room']
-    join_room(room)
-    send(username + ' has entered the room.', room=room)
+    # username = data['username']
+    # room = data['room']
+    # join_room(room)
+    # send(username + ' has entered the room.', room=room)
+    print(data)
+    print("\n\n\n\n\n222")
 
 @socketio.on('leave')
 def handle_leave(data):
