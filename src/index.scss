@@ -12,10 +12,17 @@ $width-cli: 330px;
     display: none;
 }
 
+.clearfix {
+    content: "";
+    display: table;
+    clear: both;
+}
+
 body {
     margin: 0;
     font-family: "Segoe UI";
     color: $gray-dark;
+    overflow: hidden;
 
     input, textarea {
         font-family: "Segoe UI";
@@ -39,8 +46,9 @@ body {
 
             #messages {
                 height: 666px;
-                border: 2px solid $gray-dark;
+                border: 1px solid $gray-dark;
                 padding: 9px 24px;
+                overflow-y: auto;
 
                 p {
                     margin: 0;
@@ -55,8 +63,32 @@ body {
                         padding-left: 8px;
                         margin-bottom: 14px;
                         word-break: break-word;
+
+                        img {
+                            width: 100px;
+                            height: 100px;
+                            object-fit: contain;
+                            -webkit-touch-callout: none;
+                            -webkit-user-select: none;
+                            -khtml-user-select: none;
+                            -moz-user-select: none;
+                            -ms-user-select: none;
+                            user-select: none;
+                        }
                     }
                 }
+            }
+
+            #messages::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            #messages::-webkit-scrollbar-track {
+                background: white;
+            }
+            
+            #messages::-webkit-scrollbar-thumb {
+                background: $gray-light;
             }
 
             #cli-wrapper {
@@ -77,36 +109,57 @@ body {
                 .cli {
                     display: block;
                     width: $width-cli - 26px; // Minus border and padding width
-                    border: 1px solid $gray-dark;
                     background: transparent;
-                    padding: 5px 12px;
+                    padding: 5px 13px;
                     font-size: 20px;
                     color: #707070;
                     resize: none;
                     box-shadow: none;
                     outline: none;
                 }
+
+                input {
+                    border: 1px solid $gray-dark;
+                }
+
+                textarea {
+                    border: none;
+                }
                 
                 .cli-input-wrapper {
                     z-index: 2;
                     position: absolute;
                     box-shadow: 4px 5px 6px $black-shadow;
+                    border: 1px solid $gray-dark;
 
                     .predicted-end-wrapper {
                         position: absolute;
                         height: 100%;
                         width: 100%;
+                        background: white;
                         z-index: -1;
     
                         p {
                             margin: 0;
                             font-size: 20px;     
-                            padding: 6px 13px;
+                            padding: 5px 13px;
                             
                             .predicted-text {
                                 color: $gray-light;
                             }
                         }
+                    }
+                }
+
+                .stickers-wrapper {
+                    padding: 12px;
+
+                    img {
+                        float: left;
+                        width: 100px;
+                        height: 100px;
+                        object-fit: contain;
+                        cursor: pointer;
                     }
                 }
 

@@ -1,13 +1,23 @@
 import React from 'react';
 
 function Message(props) {
-    return (
-      <div className="message-box">
+    if (props.type === "message"){
+      return (
+        <div className="message-box">
           {props.username ?
-          <p className="sender">{ props.username }</p>:""}
+          <p className="sender">{ props.username }</p> : ""}
           <p className="message">{ props.message }</p>
-      </div>
-    );
+        </div>
+      );
+    } else {
+      return (
+        <div className="message-box">
+          {props.username ?
+          <p className="sender">{ props.username }</p> : ""}
+          <p className="message"><img src={ props.message }/></p>
+        </div>
+      );
+    }
 }
 
 

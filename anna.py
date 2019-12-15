@@ -18,43 +18,39 @@ def handle_index():
 
 @socketio.on('join')
 def handle_join(data):
-    # username = data['username']
-    # room = data['room']
-    # join_room(room)
-    # send(username + ' has entered the room.', room=room)
-    print(data)
-    print("\n\n\n\n\n222")
+    username = data['username']
+    room = data['arg']
+    join_room(room)
+    emit('joined', room)
+    send({'type': 'message', 'username': 'system', 'message': username + ' вошёл в комнату.'}, room=room)
 
 @socketio.on('leave')
 def handle_leave(data):
-    username = data['username']
-    room = data['room']
+    room = data['arg']
     leave_room(room)
-    send(username + ' has left the room.', room=room)
-
-@socketio.on('connect')
-def handle_connect():
-    print('connected')
 
 @socketio.on('disconnect')
 def handle_disconnect():
     if request.sid in users:
         users.pop(request.sid)
-    print('Client disconnected')
 
 @socketio.on('auth')
-def handle_authed(username):
+def handle_authed(data):
+    username = data['username']
     if username in users.values():
         emit('auth', False)
     else:
         users[request.sid] = username
+        join_room(data['room'])
         emit('auth', True)
 
 @socketio.on('message')
 def handle_message(data):
+    message_type = data['type']
     username = data['username']
     message = data['message']
-    send({'username': username, 'message': message}, broadcast=True)
+    room = data['room']
+    send({'type': message_type, 'username': username, 'message': message}, room=room, broadcast=True)
 
 
 if __name__ == '__main__':
