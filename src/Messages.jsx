@@ -10,7 +10,7 @@ class Messages extends React.Component {
                 {this.props.messages.map((item, index, arr) => {
                     var prev_item = arr[index - 1];
     
-                    if (prev_item && (item[0] === prev_item[0])) {
+                    if (prev_item && (item[1] === prev_item[1])) {
                         return <Message type={item[0]} message={item[2]} />
                     } else {
                         return <Message type={item[0]} username={item[1]} message={item[2]} />

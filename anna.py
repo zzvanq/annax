@@ -7,7 +7,18 @@ app = Flask(__name__, template_folder='public')
 app.config['SECRET_KEY'] = '7mqNw5nEpgMT24zleTzfwtkz'
 app.config['DEBUG'] = 'True'
 users = {}
+users_rooms = {}
 socketio = SocketIO(app)
+
+
+def change_room(sid, room):
+    if request.sid in users_rooms:
+        for room in users_rooms[sid]:
+            leave_room(room)
+
+        users_rooms[sid].append(room)
+    else:
+        users_rooms[sid] = [room]
 
 
 @app.route('/')
@@ -20,19 +31,21 @@ def handle_index():
 def handle_join(data):
     username = data['username']
     room = data['arg']
+
     join_room(room)
+    change_room(request.sid, room)
+    
     emit('joined', room)
     send({'type': 'message', 'username': 'system', 'message': username + ' вошёл в комнату.'}, room=room)
 
-@socketio.on('leave')
-def handle_leave(data):
-    room = data['arg']
-    leave_room(room)
 
 @socketio.on('disconnect')
 def handle_disconnect():
     if request.sid in users:
         users.pop(request.sid)
+    
+    if request.sid in users_rooms:
+        users_rooms.pop(request.sid)
 
 @socketio.on('auth')
 def handle_authed(data):
@@ -42,6 +55,7 @@ def handle_authed(data):
     else:
         users[request.sid] = username
         join_room(data['room'])
+        change_room(request.sid, data['room'])
         emit('auth', True)
 
 @socketio.on('message')
