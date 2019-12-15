@@ -1,1 +1,1 @@
-web: gunicorn anna:anna
+web: gunicorn anna:annax
