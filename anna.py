@@ -12,13 +12,9 @@ socketio = SocketIO(app)
 
 
 def change_room(sid, room):
-    if request.sid in users_rooms:
-        for room in users_rooms[sid]:
-            leave_room(room)
-
-        users_rooms[sid].append(room)
-    else:
-        users_rooms[sid] = [room]
+    if sid in users_rooms:
+        leave_room(users_rooms[sid])
+    users_rooms[sid] = room
 
 
 @app.route('/')

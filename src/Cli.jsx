@@ -31,8 +31,18 @@ class Cli extends React.Component {
         this.searchSticker = this.searchSticker.bind(this);
         this.handleImageClick = this.handleImageClick.bind(this);
 
-        this.COMMANDS_SERVER = {"войти": "join", "создать": "join", "стикер": "sticker"};
+        this.COMMANDS_SERVER = {
+            "войти": "join",
+            "создать": "join",
+            "стикер": "sticker",
+            "enter": "join",
+            "create": "create",
+            "sticker": "sticker"
+        };
         this.COMMANDS = Object.keys(this.COMMANDS_SERVER);
+        this.SEARCH_TIMEOUT = 400;
+
+        this.stickerSearchTimeout = null;
     }
 
     componentDidMount() {
@@ -58,7 +68,8 @@ class Cli extends React.Component {
             var command = this.COMMANDS_SERVER[command_title[0]];
 
             if (command === "sticker") {
-                this.searchSticker();
+                this.props.socket.send({'type': 'sticker', 'username': this.props.username, 'message': this.state.stickers[0], 'room': this.props.room});
+                this.setState({text: '', predicted_end: '', stickers: [], visible: false});
             } else {
                 var arg = command_title.slice(1).join(' ');
 
@@ -102,7 +113,8 @@ class Cli extends React.Component {
                 diff = most_simillar.split(text).join("");
 
                 if(!diff && is_sticker)
-                    this.searchSticker(args.slice(1).join(" "));
+                    clearTimeout(this.stickerSearchTimeout);
+                    this.stickerSearchTimeout = setTimeout(() => this.searchSticker(args.slice(1).join(" ")), this.SEARCH_TIMEOUT, args);
 
             if (!is_sticker) {
                 this.setState({text: e.target.value, predicted_end: diff, stickers: []});
