@@ -1,1 +1,1 @@
-web: gunicorn anna:app
+web: gunicorn -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker -w 1 anna:app
