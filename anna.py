@@ -6,8 +6,10 @@ from flask_socketio import SocketIO, send, emit, join_room, leave_room
 app = Flask(__name__, template_folder='public')
 app.config['SECRET_KEY'] = '7mqNw5nEpgMT24zleTzfwtkz'
 app.config['DEBUG'] = 'True'
+
 users = {}
 users_rooms = {}
+
 socketio = SocketIO(app)
 
 
@@ -64,4 +66,4 @@ def handle_message(data):
 
 
 if __name__ == '__main__':
-    socketio.run(app, threaded=True)
+    socketio.run(app)

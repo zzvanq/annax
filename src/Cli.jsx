@@ -73,8 +73,10 @@ class Cli extends React.Component {
             } else {
                 var arg = command_title.slice(1).join(' ');
 
-                this.props.socket.emit(command, {'username': this.props.username, 'arg': arg});
-                this.setState({text: '', predicted_end: '', visible: false});
+                if (arg.replace(/ /g, "")) {
+                    this.props.socket.emit(command, {'username': this.props.username, 'arg': arg});
+                    this.setState({text: '', predicted_end: '', visible: false});
+                }
             }
         } else {
             if (this.state.text.replace(/ /g, "")) {
@@ -112,11 +114,13 @@ class Cli extends React.Component {
             if (most_simillar)
                 diff = most_simillar.split(text).join("");
 
-                if(!diff && is_sticker)
+                if(!diff && is_sticker) {
                     clearTimeout(this.stickerSearchTimeout);
                     this.stickerSearchTimeout = setTimeout(() => this.searchSticker(args.slice(1).join(" ")), this.SEARCH_TIMEOUT, args);
+                }
 
             if (!is_sticker) {
+
                 this.setState({text: e.target.value, predicted_end: diff, stickers: []});
             } else {
                 this.setState({text: e.target.value, predicted_end: diff});
